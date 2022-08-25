@@ -14,11 +14,17 @@
   </head>
   <body>
     <!-- <input id="demo-1" type="text" value="" placeholder="Enter something" /> -->
-    <select
-      name="Country"
-      id="demo-2"
-      placeholder="This is a placeholder"
-    ></select>
-    <script src="/app.js"></script>
+
+      <div class="dropdown_div">
+        <select
+        name="country"
+        id="countrySelect"
+        placeholder="select country"
+        multiple
+        ></select>
+        <select name="year" id="yearSelect" placeholder="select year" multiple></select>
+      </div>
+      <div id="tableContainer"></div>
+      <script src="/app.js"></script>
   </body>
 </html>
