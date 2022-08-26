@@ -146,7 +146,7 @@ countryDropdown.passedElement.element.addEventListener(
       });
       console.log(res)
       console.log(removedArr)
-      res=removedArr
+      res=removedArr;
     createTable(removedArr);
     removedArr = []
   },
