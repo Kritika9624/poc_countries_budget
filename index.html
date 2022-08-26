@@ -10,19 +10,37 @@
       href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-      <div class="dropdown_div">
-        <select
+    <div class="dropdown_div">
+      <select
         name="country"
         id="countrySelect"
         placeholder="select country"
         multiple
-        ></select>
-        <select name="year" id="yearSelect" placeholder="select year" multiple></select>
-      </div>
-      <div id="tableContainer"></div>
-      <script src="/app.js"></script>
+      ></select>
+      <select
+        name="year"
+        id="yearSelect"
+        placeholder="select year"
+        multiple
+      ></select>
+    </div>
+    <div id="tableContainer"></div>
+    <div class="btnDiv">
+      <button id="col" onclick="createColChart()">Column Chart</button>
+      <button id="bar" onclick="createBarChart()">Bar Chart</button>
+      <button id="pie" onclick="createPieChart()">Pie Chart</button>
+    </div>
+
+    <!-- sample chart-->
+    <div id="chartContainer" style="width: 100%; height: 400px"></div>
+
+    <script src="/app.js"></script>
   </body>
 </html>

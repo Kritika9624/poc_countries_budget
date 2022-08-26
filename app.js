@@ -1,5 +1,5 @@
 const str =
-  "United States^2020^3923829;United States^2019^2973920;United States^2018^32869420;China^2020^3622313;China^2019^2394820;China^2018^2297620;Germany^2020^1729224;Germany^2019^789450;Germany^2018^791670;Japan^2020^1666454;Japan^2019^1020720;Japan^2018^986250;France^2020^1334944;France^2019^627190;France^2018^564950;United Kingdom^2020^966407;United Kingdom^2019^541210;United Kingdom^2018^532360;Italy^2020^863785;Italy^2019^374590;Italy^2018^394970;India^2020^620739;India^2019^322300;India^2018^291410;Canada^2020^598434;Canada^2019^362920;Canada^2018^356820;Spain^2020^481945;Spain^2019^262320;Spain^2018^265350;Russia^2020^468651;Russia^2019^309980;Russia^2018^293520;Australia^2020^459546;Australia^2019^271050;Australia^2018^272940";
+  "United States^2020^3923829;United States^2019^2973920;United States^2018^3286942;China^2020^3622313;China^2019^2394820;China^2018^2297620;Germany^2020^1729224;Germany^2019^789450;Germany^2018^791670;Japan^2020^1666454;Japan^2019^1020720;Japan^2018^986250;France^2020^1334944;France^2019^627190;France^2018^564950;United Kingdom^2020^966407;United Kingdom^2019^541210;United Kingdom^2018^532360;Italy^2020^863785;Italy^2019^374590;Italy^2018^394970;India^2020^620739;India^2019^322300;India^2018^291410;Canada^2020^598434;Canada^2019^362920;Canada^2018^356820;Spain^2020^481945;Spain^2019^262320;Spain^2018^265350;Russia^2020^468651;Russia^2019^309980;Russia^2018^293520;Australia^2020^459546;Australia^2019^271050;Australia^2018^272940";
 
 // create 2D array from string above
 const strSplit = str.split(";");
@@ -9,11 +9,11 @@ strSplit.forEach((i) => {
 });
 
 // convert budget value to currency format
-arr.forEach((i) => {
-  let numCurr = parseInt(i[2]);
-  numCurr = numCurr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-  i[2] = numCurr.toString();
-});
+// arr.forEach((i) => {
+//   let numCurr = parseInt(i[2]);
+//   numCurr = numCurr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+//   i[2] = numCurr.toString();
+// });
 
 // remove duplicate countries
 // create array for unique countries
@@ -45,17 +45,16 @@ years.forEach((i) => {
   yearSelect.appendChild(year);
 });
 
-
-
 // function to create html table from string
 function createTable(tableData, isDdn = false) {
   // create table
-  var containerDiv = document.getElementById('tableContainer');
-  if(containerDiv.children.length !== 0){
+  var containerDiv = document.getElementById("tableContainer");
+  if (containerDiv.children.length !== 0) {
     containerDiv.removeChild(containerDiv.firstElementChild);
   }
   var table = document.createElement("table");
   table.className = "dataTable";
+  table.id = "datatable";
   let thead = document.createElement("thead");
   var tableBody = document.createElement("tbody");
 
@@ -78,18 +77,28 @@ function createTable(tableData, isDdn = false) {
     var row = document.createElement("tr");
     rowData.forEach(function (cellData) {
       var cell = document.createElement("td");
+      
       cell.appendChild(document.createTextNode(cellData));
       row.appendChild(cell);
     });
     tableBody.appendChild(row);
   });
   table.appendChild(tableBody);
-  document.getElementById('tableContainer').appendChild(table);
-
-
+  document.getElementById("tableContainer").appendChild(table);
 }
 
 createTable(arr);
+
+// var rows = document.getElementsByTagName('tr');
+// console.log(rows)
+// for(i = 1; i< rows.length; i++){
+// console.log((rows[i].children[2].innerHTML))
+
+// let numCurr = parseInt(rows[i].children[2].innerHTML);
+//   numCurr = numCurr.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+//   rows[i].children[2].textContent = numCurr.toString();
+
+// }
 
 // choices code starts here
 
@@ -118,12 +127,13 @@ var yearDropdown = new Choices("#yearSelect", {
 });
 
 
+// called when filters are added
 let res = [];
 countryDropdown.passedElement.element.addEventListener(
   "addItem",
   (event) => {
     let countryValue = event.detail.value;
-    
+
     arr
       .filter((c) => countryValue === c[0])
       .map((item, index) => {
@@ -134,6 +144,7 @@ countryDropdown.passedElement.element.addEventListener(
   false
 );
 
+// called when filters are removed
 let removedArr = [];
 countryDropdown.passedElement.element.addEventListener(
   "removeItem",
@@ -144,16 +155,106 @@ countryDropdown.passedElement.element.addEventListener(
       .map((item) => {
         removedArr.push(item);
       });
-      console.log(res)
-      console.log(removedArr)
-      res=removedArr;
-      if(removedArr.length === 0){
-        createTable(arr);
-      }else{
-
-        createTable(removedArr);
-      }
-    removedArr = []
+    console.log(res);
+    console.log(removedArr);
+    res = removedArr;
+    if (removedArr.length === 0) {
+      createTable(arr);
+    } else {
+      createTable(removedArr);
+    }
+    removedArr = [];
   },
   false
 );
+
+const columnChartObject = () =>{ 
+  Highcharts.chart({
+    chart: {
+      renderTo: "chartContainer",
+      type: "column",
+    },
+    data: {
+      table: "datatable",
+    },
+    title: {
+      text: "Country Budget",
+    },
+    xAxis: {
+      title: {
+        text: 'Country',
+      }
+    },
+    yAxis: {
+      title: {
+        text: "Budget",
+      },
+    },
+  });
+
+}
+
+const barChartObject = () =>{ 
+  Highcharts.chart({
+    chart: {
+      renderTo: "chartContainer",
+      type: "bar",
+    },
+    data: {
+      table: "datatable",
+    },
+    title: {
+      text: "Country Budget",
+    },
+    xAxis: {
+      title: {
+        text: 'Country',
+      }
+    },
+    yAxis: {
+      title: {
+        text: "Budget",
+      },
+    },
+  });
+
+}
+
+const pieChartObject = () =>{ 
+  Highcharts.chart({
+    chart: {
+      renderTo: "chartContainer",
+      type: "pie",
+    },
+    data: {
+      table: "datatable",
+    },
+    title: {
+      text: "Country Budget",
+    },
+    xAxis: {
+      title: {
+        text: 'Country',
+      }
+    },
+    yAxis: {
+      title: {
+        text: "Budget",
+      },
+    },
+  });
+
+}
+
+
+function createColChart() {
+document.addEventListener("DOMContentLoaded", columnChartObject())
+}
+function createBarChart() {
+document.addEventListener("click", barChartObject())
+}
+function createPieChart() {
+document.addEventListener("click", pieChartObject())
+}
+
+document.getElementById('col').addEventListener('click', createColChart());

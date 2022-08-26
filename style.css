@@ -50,3 +50,25 @@ td:not(:last-child){
 .choices:last-child{
     width: 140px;
 }
+
+.btnDiv{
+    margin: auto;
+    width: fit-content;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.btnDiv button:not(:last-child){
+    margin-right: 20px;
+}
+
+#col, #bar, #pie {
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    background-color: #daf8f8;
+    cursor: pointer;
+    color: #5f9ea0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+}
