@@ -168,8 +168,14 @@ countryDropdown.passedElement.element.addEventListener(
   false
 );
 
+
+
+function sumOfBudget(){
+  
+}
+
 const columnChartObject = () =>{ 
-  Highcharts.chart({
+ const chart = Highcharts.chart({
     chart: {
       renderTo: "chartContainer",
       type: "column",
@@ -191,7 +197,7 @@ const columnChartObject = () =>{
       },
     },
   });
-
+console.log(chart)
 }
 
 const barChartObject = () =>{ 
@@ -258,3 +264,4 @@ document.addEventListener("click", pieChartObject())
 }
 
 document.getElementById('col').addEventListener('click', createColChart());
+
