@@ -264,7 +264,7 @@ const barChartObject = () => {
       type: "bar",
     },
     data: {
-      table: "datatable",
+      table: "datatable3",
     },
     title: {
       text: "Country Budget",
@@ -289,7 +289,7 @@ const pieChartObject = () => {
       type: "pie",
     },
     data: {
-      table: "datatable",
+      table: "datatable3",
     },
     title: {
       text: "Country Budget",
