@@ -1,6 +1,8 @@
 const str =
   "United States^2020^3923829;United States^2019^2973920;United States^2018^3286942;China^2020^3622313;China^2019^2394820;China^2018^2297620;Germany^2020^1729224;Germany^2019^789450;Germany^2018^791670";
 
+  let isyearselected = false;
+
 // create 2D array from string above
 const strSplit = str.split(";");
 let arr = [];
@@ -201,7 +203,30 @@ countryDropdown.passedElement.element.addEventListener(
       });
     createTable(res);
     createDataTable(tempRes);
-    
+    isyearselected = false;
+  },
+  false
+);
+
+let res2 = [], tempRes2 = [];
+yearDropdown.passedElement.element.addEventListener(
+  "addItem",
+  (event) => {
+    let countryValue = event.detail.value;
+
+    arr
+      .filter((c) => countryValue === c[1])
+      .map((item, index) => {
+        res2.push(item);
+      });
+    arr3
+      .filter((c) => countryValue === c[1])
+      .map((item, index) => {
+        tempRes2.push(item);
+      });
+    createTable(res2);
+    createDataTable(tempRes2);
+    isyearselected = true
   },
   false
 );
@@ -228,6 +253,27 @@ countryDropdown.passedElement.element.addEventListener(
   false
 );
 
+let removedArr2 = [];
+yearDropdown.passedElement.element.addEventListener(
+  "removeItem",
+  (event) => {
+    let countryValue = event.detail.value;
+    res
+      .filter((c) => countryValue !== c[1])
+      .map((item) => {
+        removedArr2.push(item);
+      });
+    res = removedArr2;
+    if (removedArr2.length === 0) {
+      createTable(arr);
+    } else {
+      createTable(removedArr2);
+    }
+    removedArr2 = [];
+  },
+  false
+);
+
 
 
 const columnChartObject = () => {
@@ -237,7 +283,7 @@ const columnChartObject = () => {
       type: "column",
     },
     data: {
-      table: "datatable3",
+      table: isyearselected? "datatable" : "datatable3",
     },
     title: {
       text: "Country Budget",
@@ -264,7 +310,7 @@ const barChartObject = () => {
       type: "bar",
     },
     data: {
-      table: "datatable3",
+      table: isyearselected? "datatable" : "datatable3",
     },
     title: {
       text: "Country Budget",
@@ -289,7 +335,7 @@ const pieChartObject = () => {
       type: "pie",
     },
     data: {
-      table: "datatable3",
+      table: isyearselected? "datatable" : "datatable3",
     },
     title: {
       text: "Country Budget",
@@ -316,5 +362,5 @@ function createBarChart() {
 function createPieChart() {
   document.addEventListener("click", pieChartObject());
 }
-
-document.getElementById("col").addEventListener("click", createColChart());
+createColChart()
+// document.getElementById("col").addEventListener("click", createColChart());
